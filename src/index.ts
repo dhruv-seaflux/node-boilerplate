@@ -1,15 +1,14 @@
-import { env } from "@/common/utils/envConfig";
-import { initializeDB } from "@/config/db";
-import { app, logger } from "@/server";
+import { initializeDB } from "@/db/db";
+import { app, envs, logger } from "@/server";
 
 const startServer = async () => {
   try {
     await initializeDB();
     logger.info("Database initialized, starting server...");
 
-    const server = app.listen(env.PORT, () => {
-      const { NODE_ENV, HOST, PORT } = env;
-      logger.info(`Server (${NODE_ENV}) running on port http://${HOST}:${PORT}`);
+    const server = app.listen(envs.port, () => {
+      const { nodeEnviornment, port } = envs;
+      logger.info(`Server (${nodeEnviornment}) running on port http://localhost:${port}`);
     });
 
     const onCloseSignal = () => {

@@ -1,4 +1,4 @@
-import { destroyDB, initializeDB } from "@/config/db";
+import { destroyDB, initializeDB } from "@/db/db";
 import { app } from "@/server";
 import request from "supertest";
 
@@ -11,7 +11,7 @@ afterAll(async () => {
 });
 
 describe("Auth routes", () => {
-  test("should return 401 if user is not found", async () => {
+  test("should return user data", async () => {
     const a = await request(app).get("/users/test").send();
     expect(a.status).toBe(200);
   });

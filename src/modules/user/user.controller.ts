@@ -1,7 +1,7 @@
 import { UserEntity } from "@/db/entities";
 import { encode, getRepo, hashPassword, verifyPassword } from "@/helpers";
 import type { TRequest, TResponse } from "@/types";
-import type { TSignUpUserDTO } from "./d";
+import type { TSignInUserDTO, TSignUpUserDTO } from "./dtos";
 
 export async function signUpUser(req: TRequest<TSignUpUserDTO>, res: TResponse) {
   const { name, email, password } = req.dto;
@@ -48,6 +48,12 @@ export async function signInUser(req: TRequest<TSignInUserDTO>, res: TResponse) 
   const token = encode({ id: user.id });
 
   return res.status(200).json({ data: { id: user.id, name: user.name, email: user.email, token } });
+}
+
+export async function test(_: TRequest, res: TResponse) {
+  const userRepository = getRepo(UserEntity);
+
+  return res.status(200).json({ data: await userRepository.find() });
 }
 
 export async function getUser(req: TRequest, res: TResponse) {

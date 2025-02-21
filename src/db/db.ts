@@ -1,22 +1,19 @@
-import { UserEntity } from "@/entity/user.entity";
-import { logger } from "@/server";
-import * as dotenv from "dotenv";
+import { UserEntity } from "@/db/entities";
+import { envs, logger } from "@/server";
 import { DataSource } from "typeorm";
-
-dotenv.config();
 
 let dataSource: DataSource | null = null;
 
-export const initializeDB = async (): Promise<DataSource> => {
+export const initializeDB = async () => {
   if (!dataSource) {
     dataSource = new DataSource({
       type: "postgres",
-      host: process.env.DB_HOST,
-      port: +(process.env.DB_PORT ?? 5432),
-      username: process.env.DB_USER,
-      password: process.env.DB_PASSWORD,
-      database: process.env.DB_NAME,
-      schema: process.env.DB_SCHEMA,
+      host: envs.dbHost,
+      port: envs.dbPort,
+      username: envs.dbUser,
+      password: envs.dbPassword,
+      database: envs.dbName,
+      schema: envs.dbSchema,
       entities: [UserEntity],
     });
 
@@ -25,16 +22,17 @@ export const initializeDB = async (): Promise<DataSource> => {
       logger.info("DB Connection has been established successfully.");
     } catch (error) {
       logger.error(`Unable to connect to the database: ${error}`);
-      throw error;
     }
   }
+
   return dataSource;
 };
 
-export const getDB = (): DataSource => {
+export const getDB = () => {
   if (!dataSource) {
     throw new Error("Database has not been initialized. Call initializeDB first.");
   }
+
   return dataSource;
 };
 
@@ -42,5 +40,6 @@ export const destroyDB = async () => {
   if (dataSource) {
     await dataSource.destroy();
   }
+
   return;
 };
