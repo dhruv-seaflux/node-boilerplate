@@ -24,12 +24,16 @@
     "liquibase-stage-rollback": "cd liquibase && liquibase --defaultsFile=./liquibase-stage.properties rollbackCount 1",
     "liquibase-prod": "cd liquibase && liquibase update --defaultsFile=./liquibase-prod.properties",
     "liquibase-prod-rollback": "cd liquibase && liquibase --defaultsFile=./liquibase-prod.properties rollbackCount 1",
-    "test": "jest"
+    "start:db": "node test-config/start-db.js && cd liquibase && liquibase update --defaultsFile=./liquibase-test.properties",
+    "stop:db": "docker-compose down -v",
+    "test": "yarn start:db && jest && yarn stop:db"
   },
   "dependencies": {
     "@asteasolutions/zod-to-openapi": "^7.0.0",
     "@types/node": "^22.13.4",
     "bcrypt": "^5.1.1",
+    "chalk": "^5.4.1",
+    "cli-table3": "^0.6.5",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "envalid": "^8.0.0",

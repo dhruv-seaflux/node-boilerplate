@@ -199,7 +199,7 @@
         "useValidTypeof": "error"
       }
     },
-    "ignore": ["**/node_modules", "**/dist", "**/print-permissions.js", "scripts/test-login.ts"]
+    "ignore": ["**/node_modules", "**/dist", "**/print-permissions.js", "scripts/test-login.ts", "src/setupTests.ts", "src/resource.ts", "test-config/**"]
   },
   "javascript": {
     "formatter": {
