@@ -50,9 +50,8 @@ export async function signInUser(req: TRequest<TSignInUserDTO>, res: TResponse) 
   return res.status(200).json({ data: { id: user.id, name: user.name, email: user.email, token } });
 }
 
-export async function test(_: TRequest, res: TResponse) {
+export async function getAllUsers(_: TRequest, res: TResponse) {
   const userRepository = getRepo(UserEntity);
-
   return res.status(200).json({ data: await userRepository.find() });
 }
 

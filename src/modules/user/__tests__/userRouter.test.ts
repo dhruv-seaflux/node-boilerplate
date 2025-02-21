@@ -12,7 +12,7 @@ afterAll(async () => {
 
 describe("Auth routes", () => {
   test("should return user data", async () => {
-    const a = await request(app).get("/users/test").send();
-    expect(a.status).toBe(200);
+    const response = await request(app).get("/users/").send();
+    expect(response.status).toBe(200);
   });
 });

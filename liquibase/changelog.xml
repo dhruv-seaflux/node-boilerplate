@@ -25,6 +25,7 @@
                 <constraints nullable="false"/>
             </column>
         </createTable>
+        <sqlFile path="./seeders/users.seeders.sql" relativeToChangelogFile="true" />
         <!-- Always add rollback for every changeset -->
         <rollback>
             <dropTable tableName="users"/>
