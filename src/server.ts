@@ -1,11 +1,11 @@
+import errorHandler from "@/common/middleware/errorHandler";
 import express, { type Express } from "express";
 import helmet from "helmet";
 import { pino } from "pino";
-
-import errorHandler from "@/common/middleware/errorHandler";
 import "reflect-metadata";
 import { enableCors, envValidator } from "@/helpers";
 import morgan from "morgan";
+import { openAPIRouter } from "./api-docs";
 import { configureRoutes } from "./routes";
 
 const logger = pino({ name: "server start" });
@@ -23,6 +23,9 @@ app.use(helmet());
 app.use(morgan("tiny"));
 
 enableCors(app);
+
+// Swagger UI
+app.use(openAPIRouter);
 
 // Routing
 app.use("/", configureRoutes());
